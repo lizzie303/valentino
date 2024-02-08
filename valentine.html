@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>valentino</title>
+<style>
+  body {
+    background-color: violet;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    padding-top: 50px;
+  }
+  .cat-sticker {
+    width: 150px;
+    height: 150px;
+    background-image: url('./giphy_tonton_1.gif');
+    background-size: cover;
+    margin: 0 auto;
+  }
+  .question {
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  button {
+    font-size: 22px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: purple;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: transform 2s;
+  }
+  button:hover {
+    color: darkred;
+    border-color: darkred;
+    transform: scale(1.2);
+  }
+  #celebration {
+    display: none;
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+  }
+  #clickMe {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }  
+  .firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: yellow;
+    animation: explode 1s ease-out infinite;
+  }
+  @keyframes explode {
+    from { transform: scale(0); }
+    to { transform: scale(3); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cat-sticker"></div>
+<div class="question">Will you be my Valentine(read : Bembu forever)?</div>
+<button id="yesButton" onclick="celebrate()">Yes</button><br>
+<button id="noButton" onclick="changeTextAndSize()">No</button>
+<div id="celebration">Yaay issa Date!!</div>
+<button id="clickMe" style="display: none; margin-top: 20px;" onclick="window.open('https://music.amazon.in/albums/B0BRYLGMSF?marketplaceId=A3K6Y4MI8GDYMT&musicTerritory=IN&ref=dm_sh_yRyT2GmBjfkSHMgSezKVk4t1L&trackAsin=B0BRYKLLXK', '_blank')">CLICK ME</button>
+
+<script>
+  const noButton = document.getElementById('noButton');
+  const yesButton = document.getElementById('yesButton');
+  const clickMeButton = document.getElementById('clickMe');
+  const threshold = 100; // How close the mouse has to be to make the button move
+  let noClickCount = 0;
+  const noResponses = ['Are you sure?', "I'll be very sad if you say no", 'Please bembu'];
+
+  function changeTextAndSize() {
+    noButton.innerText = noResponses[noClickCount % noResponses.length];
+    noButton.style.fontSize = `${22 - noClickCount}px`;
+    yesButton.style.width = `${yesButton.offsetWidth + 10}px`;
+    noClickCount++;
+  }
+
+  function celebrate() {
+    document.getElementById('celebration').style.display = 'block';
+    document.querySelector('.cat-sticker').style.backgroundImage = "url('./giphy_tonton_2.gif')";
+    document.getElementById('celebration').innerText = 'YAYY ISSA DATE FOR US THENNN!!!!';
+    for (let i = 0; i < 100; i++) {
+      createFirework();
+    }
+    setTimeout(() => {
+      document.getElementById('celebration').style.display = 'none';
+      clickMeButton.style.display = 'block';
+      clickMeButton.style.top = (noButton.getBoundingClientRect().bottom + window.scrollY + 20) + 'px';
+    }, 10000);
+  }
+
+  function createFirework() {
+    const firework = document.createElement('div');
+    firework.className = 'firework';
+    firework.style.left = Math.random() * window.innerWidth + 'px';
+    firework.style.top = Math.random() * window.innerHeight + 'px';
+    document.body.appendChild(firework);
+    setTimeout(() => document.body.removeChild(firework), 1000);
+  }
+</script>
+
+</body>
+</html>
+
+
